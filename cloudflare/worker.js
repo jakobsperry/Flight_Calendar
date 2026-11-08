@@ -15,10 +15,11 @@ if(!path.startsWith('/api/'))return bad('Not found',404);
 if(req.method==='POST'&&req.headers.get('origin')!==u.origin)return bad('Origin rejected',403);
 let data={};if(['POST','PUT','DELETE'].includes(req.method)){if(Number(req.headers.get('content-length')||0)>8192)return bad('Request too large',413);try{data=await req.json()}catch{return bad('Invalid JSON')}}
 try{
+if(path==='/api/health'&&req.method==='GET'){try{await db.prepare('SELECT 1 AS ok').first();return json({database:'ok'})}catch(e){return bad('Database connection unavailable',503)}}
 if(path==='/api/register'&&req.method==='POST'){
 const username=String(data.username||'').trim(),password=String(data.password||'');
 if(!/^[a-zA-Z0-9_-]{3,30}$/.test(username)||password.length<12||password.length>128)return bad('Username must be 3–30 letters/numbers; password must be 12–128 characters');
-const id=crypto.randomUUID(),salt=random(),password_hash=await pass(password,salt);
+const id=crypto.randomUUID(),salt=random();let password_hash;try{password_hash=await pass(password,salt)}catch(e){return bad('Password hashing unavailable',503)}
 try{await db.prepare('INSERT INTO users(id,username,salt,password_hash) VALUES(?,?,?,?)').bind(id,username,salt,password_hash).run()}catch{return bad('Username unavailable',409)}
 await db.prepare('INSERT INTO calendars(id,owner_id,title) VALUES(?,?,?)').bind(crypto.randomUUID(),id,username+"'s calendar").run();
 const token=random();await db.prepare('INSERT INTO sessions(token_hash,user_id,expires_at) VALUES(?,?,?)').bind(await hash(token),id,Date.now()+2592000000).run();
@@ -47,7 +48,7 @@ if(m[2]==='shares'&&req.method==='POST'&&owner){const target=await db.prepare('S
 if(m[2]==='shares'&&req.method==='DELETE'&&owner){const target=await db.prepare('SELECT id FROM users WHERE username=?').bind(String(data.username||'')).first();if(target)await db.prepare('DELETE FROM calendar_access WHERE calendar_id=? AND user_id=?').bind(cal.id,target.id).run();return json({ok:true})}
 }
 return bad('Not found',404)
-}catch(e){return bad('Request failed',500)}
+}catch(e){return bad('Server error: '+(String(e?.message||'').includes('D1')?'database unavailable':'account operation failed'),500)}
 }};
 const PAGE=`<!doctype html><html lang="en"><meta name="viewport" content="width=device-width,initial-scale=1"><meta charset="utf-8"><title>Flight Calendar — Test</title><style>body{font:16px system-ui;background:#101217;color:#eee;max-width:550px;margin:40px auto;padding:0 20px}input,button{font:inherit;padding:12px;border-radius:8px;margin:5px 0}input{background:#222833;color:white;border:1px solid #566;width:100%;box-sizing:border-box}button{background:#315fdb;color:white;border:0;cursor:pointer}section{background:#1d222b;padding:22px;border-radius:12px;margin:15px 0}small{color:#abb}li{padding:8px 0}#msg{color:#f8bc7e}a{color:#aaccff}</style><h1>Flight Calendar <small>TEST</small></h1><p>Private accounts and calendar sharing experiment. Main website is unaffected.</p><section id="auth"><h2>Sign in</h2><input id="user" autocomplete="username" placeholder="Username"><input id="pass" type="password" autocomplete="current-password" placeholder="Password (12+ characters to register)"><button id="login">Sign in</button> <button id="register">Create account</button><p><small>No email verification. Password recovery is not available yet.</small></p></section><section id="app" hidden><h2 id="welcome"></h2><button id="logout">Sign out</button><h3>Your calendars</h3><div id="calendars"></div></section><p id="msg" role="status"></p><script>
 const $=id=>document.getElementById(id);const msg=s=>$('msg').textContent=s;
