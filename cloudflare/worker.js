@@ -16,7 +16,7 @@ if(!path.startsWith('/api/'))return bad('Not found',404);
 if(req.method==='POST'&&req.headers.get('origin')!==u.origin)return bad('Origin rejected',403);
 let data={};if(['POST','PUT','DELETE'].includes(req.method)){if(Number(req.headers.get('content-length')||0)>8192)return bad('Request too large',413);try{data=await req.json()}catch{return bad('Invalid JSON')}}
 try{
-if(path==='/api/health'&&req.method==='GET'){try{await db.prepare('SELECT 1 AS ok').first();return json({database:'ok'})}catch(e){return bad('Database connection unavailable',503)}}
+if(path==='/api/health'&&req.method==='GET'){let database='unavailable',hashing='unavailable';try{await db.prepare('SELECT 1 AS ok').first();database='ok'}catch(e){}try{await pass('diagnostic-password','diagnostic-salt');hashing='ok'}catch(e){hashing=String(e?.name||'error')+': '+String(e?.message||'').slice(0,120)}return json({database,hashing},database==='ok'&&hashing==='ok'?200:503)}
 if(path==='/api/register'&&req.method==='POST'){
 const username=String(data.username||'').trim(),password=String(data.password||'');
 if(username.length<3||username.length>80||/[\u0000-\u001f\u007f]/.test(username)||password.length<8||password.length>128)return bad('Username must be 3–80 characters; password must be 8–128 characters');
@@ -35,7 +35,7 @@ const token=random();await db.prepare('INSERT INTO sessions(token_hash,user_id,e
 return json({username:user.username},200,{'set-cookie':cookie(token,SESSION_SECONDS)});
 }
 const me=await current(req,db);if(!me)return bad('Sign in required',401);
-if(path==='/api/me'&&req.method==='GET'){const token=/\\bfc_session=([a-f0-9]{64})\\b/.exec(req.headers.get('cookie')||'')?.[1];await db.prepare('UPDATE sessions SET expires_at=? WHERE token_hash=?').bind(Date.now()+SESSION_SECONDS*1000,await hash(token)).run();return json({username:me.username},200,{'set-cookie':cookie(token,SESSION_SECONDS)})}
+if(path==='/api/me'&&req.method==='GET'){const token=/\bfc_session=([a-f0-9]{64})\b/.exec(req.headers.get('cookie')||'')?.[1];await db.prepare('UPDATE sessions SET expires_at=? WHERE token_hash=?').bind(Date.now()+SESSION_SECONDS*1000,await hash(token)).run();return json({username:me.username},200,{'set-cookie':cookie(token,SESSION_SECONDS)})}
 if(path==='/api/logout'&&req.method==='POST'){const token=/\bfc_session=([a-f0-9]{64})\b/.exec(req.headers.get('cookie')||'')?.[1];if(token)await db.prepare('DELETE FROM sessions WHERE token_hash=?').bind(await hash(token)).run();return json({ok:true},200,{'set-cookie':cookie('',0)})}
 if(path==='/api/calendars'&&req.method==='GET'){
 const rows=await db.prepare("SELECT c.id,c.title,CASE WHEN c.owner_id=? THEN 'owner' ELSE 'viewer' END AS role FROM calendars c LEFT JOIN calendar_access a ON a.calendar_id=c.id AND a.user_id=? WHERE c.owner_id=? OR a.user_id=?").bind(me.id,me.id,me.id,me.id).all();return json({calendars:rows.results})}
