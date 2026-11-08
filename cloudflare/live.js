@@ -38,7 +38,7 @@ function movement(m={}){
  return {airport:{iata:clean(m.airport?.iata)},scheduledTime:time(m.scheduledTime),revisedTime:time(m.revisedTime),runwayTime:time(m.runwayTime),terminal:clean(m.terminal),gate:clean(m.gate),baggageBelt:clean(m.baggageBelt),quality:Array.isArray(m.quality)?m.quality.map(clean):[]};
 }
 function cleanFlight(a){return {number:normalize(a.number),status:clean(a.status),airline:{name:clean(a.airline?.name)},departure:movement(a.departure),arrival:movement(a.arrival)}}
-function cached(row,now){return row?.fetched_at&&now-row.fetched_at<RETENTION?JSON.parse(row.flights_json||'[]'):[]}
+function cached(row,now){return row?.fetched_at?JSON.parse(row.flights_json||'[]'):[]}
 
 export async function lookup(env,number,date,now=Date.now()){
  const db=env.DB,key=normalize(number)+'|'+date;
@@ -95,8 +95,7 @@ function arrivalInstant(f){const start=departureInstant(f);if(start===null||!/^(
 export function imminent(f,now){const start=departureInstant(f);if(start===null||start-now>6*HOUR)return false;const arrival=arrivalInstant(f);if(arrival!==null&&now>arrival+2*HOUR)return false;if(arrival===null&&now>start+24*HOUR)return false;if(f.live?.found&&/^(Arrived|Landed|Canceled|Cancelled|Diverted)$/i.test(f.live.status||''))return false;return true}
 export async function refreshFlights(env,now=Date.now()){
  const db=env.DB;
- await db.prepare('UPDATE flight_api_cache SET fetched_at=NULL,flights_json=NULL WHERE fetched_at<?').bind(now-RETENTION).run();
- await db.prepare('DELETE FROM flight_api_cache WHERE attempted_at<?').bind(now-RETENTION).run();
+ // Preserve historical flight snapshots for display; do not poll completed flights.
  let state='missing_key';
  if(env.AERODATABOX_KEY){
   const rows=await db.prepare('SELECT flight_json FROM flights').all();
