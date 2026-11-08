@@ -5,43 +5,78 @@
       "date": "2026-11-08",
       "number": "MF859",
       "from": "XMN",
-      "to": "HAN"
+      "to": "HAN",
+      "depart": "12:55",
+      "arrive": "14:40",
+      "departTZ": "CST",
+      "arriveTZ": "ICT"
     },
     {
       "date": "2026-11-08",
       "number": "VN1717",
       "from": "HAN",
-      "to": "VII"
+      "to": "VII",
+      "depart": "18:00",
+      "arrive": "18:45",
+      "departTZ": "ICT",
+      "arriveTZ": "ICT"
     },
     {
       "date": "2026-11-13",
       "number": "VN1716",
       "from": "VII",
-      "to": "HAN"
+      "to": "HAN",
+      "depart": "08:40",
+      "arrive": "09:35",
+      "departTZ": "ICT",
+      "arriveTZ": "ICT",
+      "seat": "36C",
+      "cabin": "Economy"
     },
     {
       "date": "2026-11-13",
       "number": "VN3042",
       "from": "HAN",
-      "to": "SZX"
+      "to": "SZX",
+      "depart": "14:40",
+      "arrive": "17:25",
+      "departTZ": "ICT",
+      "arriveTZ": "CST",
+      "cabin": "Economy"
     },
     {
       "date": "2026-11-18",
       "number": "ZH1308",
       "from": "SZX",
-      "to": "PEK"
+      "to": "PEK",
+      "depart": "10:30",
+      "arrive": "13:40",
+      "departTZ": "CST",
+      "arriveTZ": "CST",
+      "cabin": "Business"
     },
     {
       "date": "2026-11-18",
       "number": "UA889",
       "from": "PEK",
-      "to": "SFO"
+      "to": "SFO",
+      "depart": "19:20",
+      "arrive": "14:50",
+      "departTZ": "CST",
+      "arriveTZ": "PST",
+      "seat": "02G",
+      "cabin": "Business"
     },
     {
       "date": "2026-11-18",
       "number": "UA5583",
       "from": "SFO",
-      "to": "RNO"
+      "to": "RNO",
+      "depart": "16:31",
+      "arrive": "17:45",
+      "departTZ": "PST",
+      "arriveTZ": "PST",
+      "cabin": "First"
     },
     {
       "date": "2026-11-19",
@@ -54,127 +89,211 @@
       "date": "2026-11-25",
       "number": "UA347",
       "from": "RNO",
-      "to": "DEN"
+      "to": "DEN",
+      "depart": "09:00",
+      "arrive": "12:20",
+      "departTZ": "PST",
+      "arriveTZ": "MST"
     },
     {
       "date": "2026-11-25",
       "number": "UA1846",
       "from": "DEN",
-      "to": "BOS"
+      "to": "BOS",
+      "depart": "13:45",
+      "arrive": "19:39",
+      "departTZ": "MST",
+      "arriveTZ": "EST"
     },
     {
       "date": "2026-11-27",
       "number": "DL2222",
       "from": "BOS",
-      "to": "DTW"
+      "to": "DTW",
+      "depart": "13:00",
+      "arrive": "15:16",
+      "departTZ": "EST",
+      "arriveTZ": "EST"
     },
     {
       "date": "2026-11-29",
       "number": "WN1929",
       "from": "DTW",
-      "to": "LAS"
+      "to": "LAS",
+      "depart": "14:50",
+      "arrive": "16:25",
+      "departTZ": "EST",
+      "arriveTZ": "PST"
     },
     {
       "date": "2026-11-29",
       "number": "WN3564",
       "from": "LAS",
-      "to": "RNO"
+      "to": "RNO",
+      "depart": "19:00",
+      "arrive": "20:25",
+      "departTZ": "PST",
+      "arriveTZ": "PST"
     },
     {
       "date": "2026-11-30",
       "number": "WN1240",
       "from": "RNO",
-      "to": "LGB"
+      "to": "LGB",
+      "depart": "06:06",
+      "arrive": "07:50",
+      "departTZ": "PST",
+      "arriveTZ": "PST"
     },
     {
       "date": "2026-12-03",
       "number": "WN526",
       "from": "LGB",
-      "to": "RNO"
+      "to": "RNO",
+      "depart": "18:05",
+      "arrive": "19:30",
+      "departTZ": "PST",
+      "arriveTZ": "PST"
     },
     {
       "date": "2026-12-07",
       "number": "WN2770",
       "from": "RNO",
-      "to": "LGB"
+      "to": "LGB",
+      "depart": "08:25",
+      "arrive": "09:55",
+      "departTZ": "PST",
+      "arriveTZ": "PST"
     },
     {
       "date": "2026-12-10",
       "number": "WN526",
       "from": "LGB",
-      "to": "RNO"
+      "to": "RNO",
+      "depart": "18:05",
+      "arrive": "19:30",
+      "departTZ": "PST",
+      "arriveTZ": "PST"
     },
     {
       "date": "2027-01-04",
       "number": "WN2770",
       "from": "RNO",
-      "to": "LGB"
+      "to": "LGB",
+      "depart": "07:10",
+      "arrive": "08:45",
+      "departTZ": "PST",
+      "arriveTZ": "PST"
     },
     {
       "date": "2027-01-09",
       "number": "WN2356",
       "from": "LGB",
-      "to": "RNO"
+      "to": "RNO",
+      "depart": "17:25",
+      "arrive": "18:50",
+      "departTZ": "PST",
+      "arriveTZ": "PST"
     },
     {
       "date": "2027-01-12",
       "number": "WN1267",
       "from": "RNO",
-      "to": "LGB"
+      "to": "LGB",
+      "depart": "08:25",
+      "arrive": "10:00",
+      "departTZ": "PST",
+      "arriveTZ": "PST"
     },
     {
       "date": "2027-01-14",
       "number": "WN4949",
       "from": "LGB",
-      "to": "RNO"
+      "to": "RNO",
+      "depart": "17:45",
+      "arrive": "19:10",
+      "departTZ": "PST",
+      "arriveTZ": "PST"
     },
     {
       "date": "2027-01-18",
       "number": "WN3300",
       "from": "RNO",
-      "to": "LGB"
+      "to": "LGB",
+      "depart": "07:05",
+      "arrive": "08:45",
+      "departTZ": "PST",
+      "arriveTZ": "PST"
     },
     {
       "date": "2027-01-21",
       "number": "WN4949",
       "from": "LGB",
-      "to": "RNO"
+      "to": "RNO",
+      "depart": "17:45",
+      "arrive": "19:15",
+      "departTZ": "PST",
+      "arriveTZ": "PST"
     },
     {
       "date": "2027-01-26",
       "number": "WN1267",
       "from": "RNO",
-      "to": "LGB"
+      "to": "LGB",
+      "depart": "08:25",
+      "arrive": "10:00",
+      "departTZ": "PST",
+      "arriveTZ": "PST"
     },
     {
       "date": "2027-01-28",
       "number": "WN4949",
       "from": "LGB",
-      "to": "RNO"
+      "to": "RNO",
+      "depart": "17:45",
+      "arrive": "19:15",
+      "departTZ": "PST",
+      "arriveTZ": "PST"
     },
     {
       "date": "2027-02-01",
       "number": "WN1267",
       "from": "RNO",
-      "to": "LGB"
+      "to": "LGB",
+      "depart": "08:25",
+      "arrive": "10:00",
+      "departTZ": "PST",
+      "arriveTZ": "PST"
     },
     {
       "date": "2027-02-04",
       "number": "WN4949",
       "from": "LGB",
-      "to": "RNO"
+      "to": "RNO",
+      "depart": "18:05",
+      "arrive": "19:30",
+      "departTZ": "PST",
+      "arriveTZ": "PST"
     },
     {
       "date": "2027-02-09",
       "number": "WN1267",
       "from": "RNO",
-      "to": "LGB"
+      "to": "LGB",
+      "depart": "08:25",
+      "arrive": "10:00",
+      "departTZ": "PST",
+      "arriveTZ": "PST"
     },
     {
       "date": "2027-02-11",
       "number": "WN4949",
       "from": "LGB",
-      "to": "RNO"
+      "to": "RNO",
+      "depart": "18:05",
+      "arrive": "19:30",
+      "departTZ": "PST",
+      "arriveTZ": "PST"
     }
   ]
 }
