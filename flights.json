@@ -1,0 +1,180 @@
+{
+  "updated": "2026-11-08",
+  "flights": [
+    {
+      "date": "2026-11-08",
+      "number": "MF859",
+      "from": "XMN",
+      "to": "HAN"
+    },
+    {
+      "date": "2026-11-08",
+      "number": "VN1717",
+      "from": "HAN",
+      "to": "VII"
+    },
+    {
+      "date": "2026-11-13",
+      "number": "VN1716",
+      "from": "VII",
+      "to": "HAN"
+    },
+    {
+      "date": "2026-11-13",
+      "number": "VN3042",
+      "from": "HAN",
+      "to": "SZX"
+    },
+    {
+      "date": "2026-11-18",
+      "number": "ZH1308",
+      "from": "SZX",
+      "to": "PEK"
+    },
+    {
+      "date": "2026-11-18",
+      "number": "UA889",
+      "from": "PEK",
+      "to": "SFO"
+    },
+    {
+      "date": "2026-11-18",
+      "number": "UA5583",
+      "from": "SFO",
+      "to": "RNO"
+    },
+    {
+      "date": "2026-11-19",
+      "number": "WN526",
+      "from": "LGB",
+      "to": "RNO",
+      "note": "Verify booking"
+    },
+    {
+      "date": "2026-11-25",
+      "number": "UA347",
+      "from": "RNO",
+      "to": "DEN"
+    },
+    {
+      "date": "2026-11-25",
+      "number": "UA1846",
+      "from": "DEN",
+      "to": "BOS"
+    },
+    {
+      "date": "2026-11-27",
+      "number": "DL2222",
+      "from": "BOS",
+      "to": "DTW"
+    },
+    {
+      "date": "2026-11-29",
+      "number": "WN1929",
+      "from": "DTW",
+      "to": "LAS"
+    },
+    {
+      "date": "2026-11-29",
+      "number": "WN3564",
+      "from": "LAS",
+      "to": "RNO"
+    },
+    {
+      "date": "2026-11-30",
+      "number": "WN1240",
+      "from": "RNO",
+      "to": "LGB"
+    },
+    {
+      "date": "2026-12-03",
+      "number": "WN526",
+      "from": "LGB",
+      "to": "RNO"
+    },
+    {
+      "date": "2026-12-07",
+      "number": "WN2770",
+      "from": "RNO",
+      "to": "LGB"
+    },
+    {
+      "date": "2026-12-10",
+      "number": "WN526",
+      "from": "LGB",
+      "to": "RNO"
+    },
+    {
+      "date": "2027-01-04",
+      "number": "WN2770",
+      "from": "RNO",
+      "to": "LGB"
+    },
+    {
+      "date": "2027-01-09",
+      "number": "WN2356",
+      "from": "LGB",
+      "to": "RNO"
+    },
+    {
+      "date": "2027-01-12",
+      "number": "WN1267",
+      "from": "RNO",
+      "to": "LGB"
+    },
+    {
+      "date": "2027-01-14",
+      "number": "WN4949",
+      "from": "LGB",
+      "to": "RNO"
+    },
+    {
+      "date": "2027-01-18",
+      "number": "WN3300",
+      "from": "RNO",
+      "to": "LGB"
+    },
+    {
+      "date": "2027-01-21",
+      "number": "WN4949",
+      "from": "LGB",
+      "to": "RNO"
+    },
+    {
+      "date": "2027-01-26",
+      "number": "WN1267",
+      "from": "RNO",
+      "to": "LGB"
+    },
+    {
+      "date": "2027-01-28",
+      "number": "WN4949",
+      "from": "LGB",
+      "to": "RNO"
+    },
+    {
+      "date": "2027-02-01",
+      "number": "WN1267",
+      "from": "RNO",
+      "to": "LGB"
+    },
+    {
+      "date": "2027-02-04",
+      "number": "WN4949",
+      "from": "LGB",
+      "to": "RNO"
+    },
+    {
+      "date": "2027-02-09",
+      "number": "WN1267",
+      "from": "RNO",
+      "to": "LGB"
+    },
+    {
+      "date": "2027-02-11",
+      "number": "WN4949",
+      "from": "LGB",
+      "to": "RNO"
+    }
+  ]
+}
