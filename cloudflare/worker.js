@@ -6,6 +6,7 @@ async function pass(password,salt){const key=await crypto.subtle.importKey('raw'
 const json=(v,status=200,headers={})=>new Response(JSON.stringify(v),{status,headers:{'content-type':'application/json','cache-control':'no-store','x-content-type-options':'nosniff',...headers}});
 const bad=(message,status=400)=>json({error:message},status);
 async function current(req,db){const token=/\bfc_session=([a-f0-9]{64})\b/.exec(req.headers.get('cookie')||'')?.[1];if(!token)return null;return db.prepare('SELECT users.id,users.username FROM sessions JOIN users ON users.id=sessions.user_id WHERE sessions.token_hash=? AND sessions.expires_at>?').bind(await hash(token),Date.now()).first()}
+const SESSION_SECONDS=34560000; // 400 days; renewed on every visit
 const cookie=(token,maxAge)=>'fc_session='+token+'; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age='+maxAge;
 export default {async fetch(req,env){
 const u=new URL(req.url),path=u.pathname,db=env.DB;
@@ -22,19 +23,19 @@ if(username.length<3||username.length>80||/[\u0000-\u001f\u007f]/.test(username)
 const id=crypto.randomUUID(),salt=random();let password_hash;try{password_hash=await pass(password,salt)}catch(e){return bad('Password hashing unavailable',503)}
 try{await db.prepare('INSERT INTO users(id,username,salt,password_hash) VALUES(?,?,?,?)').bind(id,username,salt,password_hash).run()}catch{return bad('Username unavailable',409)}
 await db.prepare('INSERT INTO calendars(id,owner_id,title) VALUES(?,?,?)').bind(crypto.randomUUID(),id,username+"'s calendar").run();
-const token=random();await db.prepare('INSERT INTO sessions(token_hash,user_id,expires_at) VALUES(?,?,?)').bind(await hash(token),id,Date.now()+2592000000).run();
-return json({username},200,{'set-cookie':cookie(token,2592000)});
+const token=random();await db.prepare('INSERT INTO sessions(token_hash,user_id,expires_at) VALUES(?,?,?)').bind(await hash(token),id,Date.now()+SESSION_SECONDS*1000).run();
+return json({username},200,{'set-cookie':cookie(token,SESSION_SECONDS)});
 }
 if(path==='/api/login'&&req.method==='POST'){
 const username=String(data.username||''),password=String(data.password||'');
 const user=await db.prepare('SELECT * FROM users WHERE username=?').bind(username).first();
 const salt=user?.salt||'invalid-salt';const computed=await pass(password,salt);
 if(!user||computed!==user.password_hash)return bad('Invalid username or password',401);
-const token=random();await db.prepare('INSERT INTO sessions(token_hash,user_id,expires_at) VALUES(?,?,?)').bind(await hash(token),user.id,Date.now()+2592000000).run();
-return json({username:user.username},200,{'set-cookie':cookie(token,2592000)});
+const token=random();await db.prepare('INSERT INTO sessions(token_hash,user_id,expires_at) VALUES(?,?,?)').bind(await hash(token),user.id,Date.now()+SESSION_SECONDS*1000).run();
+return json({username:user.username},200,{'set-cookie':cookie(token,SESSION_SECONDS)});
 }
 const me=await current(req,db);if(!me)return bad('Sign in required',401);
-if(path==='/api/me'&&req.method==='GET')return json({username:me.username});
+if(path==='/api/me'&&req.method==='GET'){const token=/\\bfc_session=([a-f0-9]{64})\\b/.exec(req.headers.get('cookie')||'')?.[1];await db.prepare('UPDATE sessions SET expires_at=? WHERE token_hash=?').bind(Date.now()+SESSION_SECONDS*1000,await hash(token)).run();return json({username:me.username},200,{'set-cookie':cookie(token,SESSION_SECONDS)})}
 if(path==='/api/logout'&&req.method==='POST'){const token=/\bfc_session=([a-f0-9]{64})\b/.exec(req.headers.get('cookie')||'')?.[1];if(token)await db.prepare('DELETE FROM sessions WHERE token_hash=?').bind(await hash(token)).run();return json({ok:true},200,{'set-cookie':cookie('',0)})}
 if(path==='/api/calendars'&&req.method==='GET'){
 const rows=await db.prepare("SELECT c.id,c.title,CASE WHEN c.owner_id=? THEN 'owner' ELSE 'viewer' END AS role FROM calendars c LEFT JOIN calendar_access a ON a.calendar_id=c.id AND a.user_id=? WHERE c.owner_id=? OR a.user_id=?").bind(me.id,me.id,me.id,me.id).all();return json({calendars:rows.results})}
