@@ -60,7 +60,7 @@ export async function lookup(env,number,date,now=Date.now()){
  let flights,error=null;
  try{
   const url='https://aerodatabox.p.rapidapi.com/flights/number/'+encodeURIComponent(normalize(number))+'/'+date+'?dateLocalRole=Departure&withAircraftImage=false&withLocation=false&withFlightPlan=false';
-  const response=await fetch(url,{headers:{'X-RapidAPI-Key':env.AERODATABOX_KEY,'X-RapidAPI-Host':'aerodatabox.p.rapidapi.com',Accept:'application/json'},redirect:'error',signal:AbortSignal.timeout(12000)});
+  const response=await fetch(url,{headers:{'X-RapidAPI-Key':env.AERODATABOX_KEY,'X-RapidAPI-Host':'aerodatabox.p.rapidapi.com',Accept:'application/json'},redirect:'manual',signal:AbortSignal.timeout(12000)});
   if(response.status===204||response.status===404)flights=[];
   else if(!response.ok)error=response.status===429?'provider_quota':response.status===401||response.status===403?'provider_unauthorized':'provider_error';
   else{
