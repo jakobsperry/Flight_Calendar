@@ -2,7 +2,7 @@ const enc=new TextEncoder();
 const hex=b=>Array.from(new Uint8Array(b),x=>x.toString(16).padStart(2,'0')).join('');
 const random=()=>hex(crypto.getRandomValues(new Uint8Array(32)));
 const hash=async s=>hex(await crypto.subtle.digest('SHA-256',enc.encode(s)));
-async function pass(password,salt){const key=await crypto.subtle.importKey('raw',enc.encode(password),'PBKDF2',false,['deriveBits']);return hex(await crypto.subtle.deriveBits({name:'PBKDF2',salt:enc.encode(salt),iterations:210000,hash:'SHA-256'},key,256))}
+async function pass(password,salt){const key=await crypto.subtle.importKey('raw',enc.encode(password),'PBKDF2',false,['deriveBits']);return hex(await crypto.subtle.deriveBits({name:'PBKDF2',salt:enc.encode(salt),iterations:100000,hash:'SHA-256'},key,256))}
 const json=(v,status=200,headers={})=>new Response(JSON.stringify(v),{status,headers:{'content-type':'application/json','cache-control':'no-store','x-content-type-options':'nosniff',...headers}});
 const bad=(message,status=400)=>json({error:message},status);
 async function current(req,db){const token=/\bfc_session=([a-f0-9]{64})\b/.exec(req.headers.get('cookie')||'')?.[1];if(!token)return null;return db.prepare('SELECT users.id,users.username FROM sessions JOIN users ON users.id=sessions.user_id WHERE sessions.token_hash=? AND sessions.expires_at>?').bind(await hash(token),Date.now()).first()}
@@ -20,7 +20,7 @@ if(path==='/api/health'&&req.method==='GET'){try{await db.prepare('SELECT 1 AS o
 if(path==='/api/register'&&req.method==='POST'){
 const username=String(data.username||'').trim(),password=String(data.password||'');
 if(username.length<3||username.length>80||/[\u0000-\u001f\u007f]/.test(username)||password.length<8||password.length>128)return bad('Username must be 3–80 characters; password must be 8–128 characters');
-const id=crypto.randomUUID(),salt=random();let password_hash;try{password_hash=await pass(password,salt)}catch(e){return bad('Password hashing unavailable',503)}
+const id=crypto.randomUUID(),salt=random();let password_hash;try{password_hash=await pass(password,salt)}catch(e){return bad('Password hashing unavailable: '+String(e?.name||'error'),503)}
 try{await db.prepare('INSERT INTO users(id,username,salt,password_hash) VALUES(?,?,?,?)').bind(id,username,salt,password_hash).run()}catch{return bad('Username unavailable',409)}
 await db.prepare('INSERT INTO calendars(id,owner_id,title) VALUES(?,?,?)').bind(crypto.randomUUID(),id,username+"'s calendar").run();
 const token=random();await db.prepare('INSERT INTO sessions(token_hash,user_id,expires_at) VALUES(?,?,?)').bind(await hash(token),id,Date.now()+SESSION_SECONDS*1000).run();
