@@ -101,7 +101,9 @@ export async function refreshFlights(env,now=Date.now()){
   const rows=await db.prepare('SELECT flight_json FROM flights').all();
   const flights=await enrichFlights(db,rows.results.map(r=>JSON.parse(r.flight_json)),now);
   const due=flights.filter(f=>imminent(f,now)).sort((a,b)=>departureInstant(a)-departureInstant(b));
-  const seen=new Set();state='waiting';
+  const pending=await db.prepare('SELECT cache_key,number,date FROM flight_api_backfill ORDER BY date LIMIT 8').all();
+  for(const job of pending.results){const result=await lookup(env,job.number,job.date,now);if(result.error==='budget_exhausted'||result.error==='provider_unauthorized'||result.error==='provider_quota'){state=result.error;break}await db.prepare('DELETE FROM flight_api_backfill WHERE cache_key=?').bind(job.cache_key).run();state=result.error||'ok'}
+  const seen=new Set();state=state==='waiting'?'waiting':state;
   for(const f of due){const key=normalize(f.number)+'|'+f.date;if(seen.has(key))continue;seen.add(key);
    const r=await lookup(env,f.number,f.date,now);state=r.error||'ok';
    if(r.error==='budget_exhausted'||r.error==='provider_unauthorized'||r.error==='provider_quota')break;
