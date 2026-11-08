@@ -91,12 +91,8 @@ export async function refreshInfo(env,now=Date.now()){
  const s=await env.DB.prepare('SELECT checked_at,state FROM flight_api_scheduler WHERE id=1').first();
  return {configured:!!env.AERODATABOX_KEY,budgetLimit:400,budgetUsed:r.used,budgetWindow:'rolling 31 days',checkedAt:s?.checked_at||null,state:!env.AERODATABOX_KEY?'missing_key':s?.state||'waiting',intervalMinutes:60,leadHours:6};
 }
-export function imminent(f,now){
- const start=departureInstant(f);if(start===null||start-now>6*HOUR)return false;
- if(f.live?.found&&/^(Arrived|Canceled|Cancelled|Diverted)$/i.test(f.live.status||''))return false;
- // Keep a departed flight updated until arrival, with a finite 24-hour cutoff.
- return now<start+24*HOUR;
-}
+function arrivalInstant(f){const start=departureInstant(f);if(start===null||!/^([01]\\d|2[0-3]):[0-5]\\d$/.test(f.arrive||''))return null;const d=f.arriveDate||f.arrivalDate||f.date;if(!/^\\d{4}-\\d\\d-\\d\\d$/.test(d||''))return null;const end=departureInstant({...f,date:d,depart:f.arrive,departTZ:f.arriveTZ,from:f.to});if(end===null)return null;let result=end;if(!f.arriveDate&&!f.arrivalDate){while(result<start)result+=24*HOUR;if(result-start>36*HOUR)return null}return result}
+export function imminent(f,now){const start=departureInstant(f);if(start===null||start-now>6*HOUR)return false;const arrival=arrivalInstant(f);if(arrival!==null&&now>arrival+2*HOUR)return false;if(arrival===null&&now>start+24*HOUR)return false;if(f.live?.found&&/^(Arrived|Landed|Canceled|Cancelled|Diverted)$/i.test(f.live.status||''))return false;return true}
 export async function refreshFlights(env,now=Date.now()){
  const db=env.DB;
  await db.prepare('UPDATE flight_api_cache SET fetched_at=NULL,flights_json=NULL WHERE fetched_at<?').bind(now-RETENTION).run();
