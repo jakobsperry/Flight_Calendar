@@ -55,7 +55,8 @@
       "arriveTZ": "PST",
       "airline": "Southwest Airlines",
       "cabin": "Economy",
-      "note": "Verify booking: conflicts with the November 13–18 Asia itinerary."
+      "note": "Canceled by traveler on November 11, 2026.",
+      "bookingStatus": "Canceled"
     },
     {
       "date": "2026-11-18",
