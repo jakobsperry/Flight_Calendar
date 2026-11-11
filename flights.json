@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-08",
+  "updated": "2026-11-11",
   "flights": [
     {
       "date": "2026-11-08",
@@ -45,6 +45,19 @@
       "cabin": "Economy"
     },
     {
+      "date": "2026-11-17",
+      "number": "WN2770",
+      "from": "RNO",
+      "to": "LGB",
+      "depart": "08:25",
+      "arrive": "09:55",
+      "departTZ": "PST",
+      "arriveTZ": "PST",
+      "airline": "Southwest Airlines",
+      "cabin": "Economy",
+      "note": "Verify booking: conflicts with the November 13–18 Asia itinerary."
+    },
+    {
       "date": "2026-11-18",
       "number": "ZH1308",
       "from": "SZX",
@@ -53,18 +66,6 @@
       "arrive": "13:40",
       "departTZ": "CST",
       "arriveTZ": "CST",
-      "cabin": "Business"
-    },
-    {
-      "date": "2026-11-18",
-      "number": "UA889",
-      "from": "PEK",
-      "to": "SFO",
-      "depart": "19:20",
-      "arrive": "14:50",
-      "departTZ": "CST",
-      "arriveTZ": "PST",
-      "seat": "02G",
       "cabin": "Business"
     },
     {
@@ -79,11 +80,16 @@
       "cabin": "First"
     },
     {
-      "date": "2026-11-19",
-      "number": "WN526",
-      "from": "LGB",
-      "to": "RNO",
-      "note": "Verify booking"
+      "date": "2026-11-18",
+      "number": "UA889",
+      "from": "PEK",
+      "to": "SFO",
+      "depart": "19:20",
+      "arrive": "14:50",
+      "departTZ": "CST",
+      "arriveTZ": "PST",
+      "seat": "02G",
+      "cabin": "Business"
     },
     {
       "date": "2026-11-25",
@@ -133,17 +139,20 @@
       "depart": "19:00",
       "arrive": "20:25",
       "departTZ": "PST",
-      "arriveTZ": "PST"
+      "arriveTZ": "PST",
+      "seat": "17D"
     },
     {
       "date": "2026-11-30",
       "number": "WN1240",
       "from": "RNO",
       "to": "LGB",
-      "depart": "06:06",
+      "depart": "06:05",
       "arrive": "07:50",
       "departTZ": "PST",
-      "arriveTZ": "PST"
+      "arriveTZ": "PST",
+      "seat": "07D",
+      "cabin": "Economy"
     },
     {
       "date": "2026-12-03",
@@ -173,7 +182,8 @@
       "depart": "18:05",
       "arrive": "19:30",
       "departTZ": "PST",
-      "arriveTZ": "PST"
+      "arriveTZ": "PST",
+      "bookingStatus": "Confirmed"
     },
     {
       "date": "2027-01-04",
