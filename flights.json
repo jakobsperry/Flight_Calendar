@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-11",
+  "updated": "2026-11-24",
   "flights": [
     {
       "date": "2026-11-08",
@@ -120,7 +120,9 @@
       "depart": "13:00",
       "arrive": "15:16",
       "departTZ": "EST",
-      "arriveTZ": "EST"
+      "arriveTZ": "EST",
+      "seat": "23D",
+      "cabin": "Delta Main Classic"
     },
     {
       "date": "2026-11-29",
