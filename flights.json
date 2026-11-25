@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-08",
+  "updated": "2026-11-25",
   "flights": [
     {
       "date": "2026-11-08",
@@ -162,26 +162,6 @@
       "to": "LGB",
       "depart": "08:25",
       "arrive": "09:55",
-      "departTZ": "PST",
-      "arriveTZ": "PST"
-    },
-    {
-      "date": "2026-12-10",
-      "number": "WN526",
-      "from": "LGB",
-      "to": "RNO",
-      "depart": "18:05",
-      "arrive": "19:30",
-      "departTZ": "PST",
-      "arriveTZ": "PST"
-    },
-    {
-      "date": "2027-01-04",
-      "number": "WN2770",
-      "from": "RNO",
-      "to": "LGB",
-      "depart": "07:10",
-      "arrive": "08:45",
       "departTZ": "PST",
       "arriveTZ": "PST"
     },
