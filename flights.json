@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-24",
+  "updated": "2026-11-26",
   "flights": [
     {
       "date": "2026-11-08",
@@ -186,7 +186,8 @@
       "arrive": "19:30",
       "departTZ": "PST",
       "arriveTZ": "PST",
-      "bookingStatus": "Confirmed"
+      "bookingStatus": "Canceled",
+      "note": "Canceled per travel confirmation dated November 25, 2026."
     },
     {
       "date": "2027-01-04",
@@ -196,7 +197,9 @@
       "depart": "07:10",
       "arrive": "08:45",
       "departTZ": "PST",
-      "arriveTZ": "PST"
+      "arriveTZ": "PST",
+      "bookingStatus": "Canceled",
+      "note": "Canceled per travel confirmation dated November 25, 2026."
     },
     {
       "date": "2027-01-09",
