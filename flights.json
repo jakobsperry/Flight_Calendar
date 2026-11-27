@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-25",
+  "updated": "2026-11-27",
   "flights": [
     {
       "date": "2026-11-08",
@@ -57,6 +57,17 @@
     },
     {
       "date": "2026-11-18",
+      "number": "UA5583",
+      "from": "SFO",
+      "to": "RNO",
+      "depart": "16:31",
+      "arrive": "17:45",
+      "departTZ": "PST",
+      "arriveTZ": "PST",
+      "cabin": "First"
+    },
+    {
+      "date": "2026-11-18",
       "number": "UA889",
       "from": "PEK",
       "to": "SFO",
@@ -66,17 +77,6 @@
       "arriveTZ": "PST",
       "seat": "02G",
       "cabin": "Business"
-    },
-    {
-      "date": "2026-11-18",
-      "number": "UA5583",
-      "from": "SFO",
-      "to": "RNO",
-      "depart": "16:31",
-      "arrive": "17:45",
-      "departTZ": "PST",
-      "arriveTZ": "PST",
-      "cabin": "First"
     },
     {
       "date": "2026-11-19",
@@ -164,6 +164,45 @@
       "arrive": "09:55",
       "departTZ": "PST",
       "arriveTZ": "PST"
+    },
+    {
+      "date": "2026-12-10",
+      "number": "WN2592",
+      "from": "LGB",
+      "to": "LAS",
+      "depart": "08:00",
+      "arrive": "09:15",
+      "seat": "05D",
+      "departTZ": "PST",
+      "arriveTZ": "PST",
+      "cabin": "Economy",
+      "note": "SAP Concur"
+    },
+    {
+      "date": "2026-12-10",
+      "number": "WN4480",
+      "from": "LAS",
+      "to": "RNO",
+      "depart": "19:25",
+      "arrive": "20:55",
+      "seat": "05D",
+      "departTZ": "PST",
+      "arriveTZ": "PST",
+      "cabin": "Economy",
+      "note": "SAP Concur"
+    },
+    {
+      "date": "2027-01-04",
+      "number": "WN2770",
+      "from": "RNO",
+      "to": "LGB",
+      "depart": "07:10",
+      "arrive": "08:45",
+      "seat": "03D",
+      "departTZ": "PST",
+      "arriveTZ": "PST",
+      "cabin": "Economy",
+      "note": "SAP Concur"
     },
     {
       "date": "2027-01-09",
